@@ -5,10 +5,69 @@ from .models import UploadedFile
 import json
 import openai
 from django.conf import settings  # OpenAI API 키를 settings에서 불러오기
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 
 # OpenAI API 키 설정
 openai.api_key = settings.OPENAI_API_KEY
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # 사용자가 등록된 후 로그인 처리
+            user = form.save()  # 회원가입 처리
+            login(request, user)  # 바로 로그인
+            return redirect('main')  # 회원가입 후 메인 페이지로 리디렉션
+        else:
+            # 폼이 유효하지 않으면, 오류 메시지와 함께 폼을 다시 렌더링
+            print(form.errors)  # 오류 메시지 출력 (디버깅용)
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'Server/signup.html', {'form': form})
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # 사용자가 정상적으로 가입되면
+            form.save()  # 회원가입 처리
+            return redirect('login')  # 회원가입 후 로그인 페이지로 리디렉션
+        else:
+            # 폼이 유효하지 않으면, 오류 메시지와 함께 폼을 다시 렌더링
+            print(form.errors)  # 오류 메시지 출력 (디버깅용)
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'Server/signup.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)  # 로그인 처리
+                return redirect('main')  # 로그인 후 메인 페이지로 리디렉션
+            else:
+                form.add_error(None, '아이디 또는 비밀번호가 잘못되었습니다.')
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'Server/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)  # 로그아웃 처리
+    return redirect('Server/login.html')  # 로그아웃 후 로그인 페이지로 리디렉션
+
+def main_page(request):
+    return render(request, 'Server/main.html')
 
 
 @csrf_exempt
@@ -119,8 +178,6 @@ def howtouse_page(request):
 def original_page(request):
     return render(request, 'Server/original.html')
 
-def main_page(request):
-    return render(request, 'Server/main.html')  # main.html 템플릿 렌더링
 
 # 검색 페이지 뷰
 def search_page(request):
@@ -129,6 +186,7 @@ def search_page(request):
 # 증명서 페이지 뷰
 def certificate_page(request):
     return render(request, 'Server/certificate.html')
+
 
 @csrf_exempt
 def ask_gpt(request):

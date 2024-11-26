@@ -19,10 +19,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from Server import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # 관리자 페이지
     path('server/', include('Server.urls')),  # Server 앱 URL 포함
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path('main/', views.main_page, name='main'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

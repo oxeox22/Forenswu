@@ -15,4 +15,6 @@ urlpatterns = [
     path('search/', views.search_page, name='search_page'),  # 검색 페이지 추가
     path('certificate/', views.certificate_page, name='certificate_page'),  # 증명서 페이지 추가
     path('mypage/', views.original_page, name='mypage_page'),  # 마이페이지를 기존 original과 동일하게 처리
+    path('login/', views.login_view, name='login'),  # 로그인 페이지
+    path('signup/', views.signup_view, name='signup'),  # 회원가입 페이지
 ]

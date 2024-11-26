@@ -13,6 +13,46 @@
             padding: 0;
         }
 
+        /* 네비게이션 바 */
+        .navbar {
+            background: linear-gradient(135deg, #007bff, #6c63ff);
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+            text-decoration: underline;
+        }
+
+        .nav-login {
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-login:hover {
+            background-color: #ffc107;
+            color: #000;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #007bff, #6c63ff);
@@ -87,6 +127,44 @@
     </style>
 </head>
 <body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/server/main/">Forenswu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/search/">검색</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/upload/">가명화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/gpt/">GPT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/certificate/">증명서</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/original/">마이페이지</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/accounts/logout/">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/accounts/login/">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
         <h1>Forenswu</h1>

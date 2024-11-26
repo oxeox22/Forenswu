@@ -1,10 +1,216 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* 전체 페이지 및 고정 네비게이션 바 설정 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 네비게이션 바 설정 */
+        .navbar {
+            background: linear-gradient(135deg, #007bff, #6c63ff);
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+            text-decoration: underline;
+        }
+
+        .nav-login {
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-login:hover {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        /* 로그인 폼 */
+        .login-form {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .login-form h2 {
+            text-align: center;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .login-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 회원가입 링크 스타일 */
+        .signup-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            color: #0056b3;
+        }
+
+        /* 푸터 고정 */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
+    <!-- 상단바 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/server/main/">Forenswu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/search/">검색</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/upload/">가명화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/gpt/">GPT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/certificate/">증명서</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/original/">마이페이지</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/accounts/logout/">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/accounts/login/">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+    <!-- 로그인 폼 -->
+    <div class="content">
+        <div class="login-form">
+            <h2>로그인</h2>
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_username">아이디</label>
+                <input type="text" id="id_username" name="username" placeholder="아이디를 입력하세요" required>
+
+                <label for="id_password">비밀번호</label>
+                <input type="password" id="id_password" name="password" placeholder="비밀번호를 입력하세요" required>
+
+                <button type="submit">로그인</button>
+            </form>
+
+            <!-- 오류 메시지 출력 -->
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                            <!-- 비밀번호가 잘못되었을 때 한국어로 메시지 출력 -->
+                            {% if error == "This password is incorrect." %}
+                                <li>비밀번호가 잘못되었습니다.</li>
+                            {% else %}
+                                <li>{{ error }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- 회원가입 링크 -->
+            <div class="signup-link">
+                <p>아직 회원이 아니신가요? <a href="{% url 'signup' %}">회원가입</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 고정 -->
+    <footer>
+        <p>ⓒ Forenswu</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
