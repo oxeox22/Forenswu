@@ -147,11 +147,14 @@
                 <!-- 로그인 상태에 따라 Login/Logout 표시 -->
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link nav-login" href="/accounts/logout/">Logout</a>
+                    <form action="{% url 'server_logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link nav-login btn btn-link">Logout</button>
+                    </form>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link nav-login" href="/accounts/login/">Login</a>
+                    <a class="nav-link nav-login" href="/server/login/">Login</a>
                 </li>
                 {% endif %}
             </ul>

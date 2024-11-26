@@ -131,3 +131,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # OpenAI API Key (환경 변수에서 읽어옴)
 OPENAI_API_KEY = config('OPENAI_API_KEY')
+
+LOGOUT_REDIRECT_URL = '/server/login/'
