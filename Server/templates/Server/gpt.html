@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forenswu - GPT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 네비게이션 바 고정 */
+        .navbar {
+            background: linear-gradient(135deg, #007bff, #6c63ff);
+            position: fixed; /* 네비게이션 바를 화면 상단에 고정 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
+            padding: 0.5rem 1rem; /* 적절한 패딩 추가 */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important; /* 금색 */
+            text-decoration: underline;
+        }
+
+        /* Login 버튼 강조 */
+        .nav-login {
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-login:hover {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .side-bar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            margin-top: 56px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .side-bar h4 {
+            margin-bottom: 20px;
+        }
+
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .file-item {
+            background-color: #495057;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            background-color: #6c757d;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 56px;
+            overflow-y: auto;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-bubble {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            display: inline-block;
+        }
+
+        .chat-bubble.question {
+            background-color: #d4edda;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+        .chat-bubble.answer {
+            background-color: #e9ecef;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            border-radius: 20px;
+            border: 1px solid #ced4da;
+            padding: 10px 15px;
+        }
+
+        .chat-input button {
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/server/main/">Forenswu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/search/">검색</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/upload/">가명화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/gpt/">GPT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/certificate/">증명서</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/mypage/">마이페이지</a>
+                    </li>
+                    <!-- 로그인 상태에 따라 Login/Logout 표시 -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/accounts/logout/">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/accounts/login/">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 사이드바 -->
+    <div class="side-bar">
+        <h4>File list</h4>
+        <div class="file-list" id="fileList"></div>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <div class="main-content">
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="chat-input">
+            <input type="text" id="questionInput" placeholder="질문을 입력하세요">
+            <button id="askButton" class="btn btn-primary">질문하기</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedFileId = null;
+
+        async function loadFileList() {
+            const fileListContainer = document.getElementById("fileList");
+
+            try {
+                const response = await fetch("/server/get_uploaded_files/");
+                const files = await response.json();
+
+                fileListContainer.innerHTML = "";
+                files.forEach(file => {
+                    const fileItem = document.createElement("div");
+                    fileItem.classList.add("file-item");
+                    fileItem.textContent = `${file.title}`;
+                    fileItem.onclick = () => startChatWithFile(file.id);
+                    fileListContainer.appendChild(fileItem);
+                });
+            } catch (error) {
+                console.error("Error loading file list:", error);
+                fileListContainer.innerHTML = "<div>파일 목록을 불러올 수 없습니다.</div>";
+            }
+        }
+
+        function startChatWithFile(fileId) {
+            selectedFileId = fileId;
+            const chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML = `<div class="chat-bubble answer">파일 ID ${fileId}를 선택했습니다. 질문을 입력하세요.</div>`;
+        }
+
+        async function askGPT() {
+            const questionInput = document.getElementById("questionInput");
+            const question = questionInput.value.trim();
+            const chatBox = document.getElementById("chatBox");
+
+            if (!question) {
+                alert("질문을 입력하세요!");
+                return;
+            }
+
+            if (!selectedFileId) {
+                alert("먼저 파일을 선택하세요!");
+                return;
+            }
+
+            const questionBubble = document.createElement("div");
+            questionBubble.classList.add("chat-bubble", "question");
+            questionBubble.textContent = question;
+            chatBox.appendChild(questionBubble);
+
+            try {
+                const response = await fetch("/server/ask_gpt/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question, file_id: selectedFileId }),
+                });
+                const data = await response.json();
+
+                const answerBubble = document.createElement("div");
+                answerBubble.classList.add("chat-bubble", "answer");
+                answerBubble.textContent = data.answer || "GPT 응답이 올바르지 않습니다.";
+                chatBox.appendChild(answerBubble);
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                const errorBubble = document.createElement("div");
+                errorBubble.classList.add("chat-bubble", "answer");
+                errorBubble.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
+                chatBox.appendChild(errorBubble);
+                console.error(error);
+            }
+
+            questionInput.value = "";
+        }
+
+        document.getElementById("askButton").addEventListener("click", askGPT);
+
+        loadFileList();
+    </script>
+</body>
+
+</html>
