@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 수정</title>
+</head>
+<body>
+    <h1>프로필 수정</h1>
+    <img src="{{ user.profile.image.url }}" alt="프로필 이미지" width="150" height="150">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">업데이트</button>
+    </form>
+</body>
+</html>

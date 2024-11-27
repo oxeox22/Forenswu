@@ -17,4 +17,6 @@ urlpatterns = [
     path('mypage/', views.original_page, name='mypage_page'),  # 마이페이지를 기존 original과 동일하게 처리
     path('login/', views.login_view, name='login'),  # 로그인 페이지
     path('signup/', views.signup_view, name='signup'),  # 회원가입 페이지
+    path('profile/', views.profile, name='profile'),
+    path('profile/update/', views.profile_update, name='profile_update'),
 ]

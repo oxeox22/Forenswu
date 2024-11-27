@@ -133,3 +133,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 OPENAI_API_KEY = config('OPENAI_API_KEY')
 
 LOGOUT_REDIRECT_URL = '/server/login/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # 정적 파일이 위치한 디렉토리 경로
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

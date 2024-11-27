@@ -9,6 +9,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from .forms import ProfileUpdateForm
 
 # OpenAI API 키 설정
 openai.api_key = settings.OPENAI_API_KEY
@@ -234,3 +236,34 @@ def ask_gpt(request):
             return JsonResponse({"error": f"서버 오류: {str(e)}"}, status=500)
 
     return JsonResponse({"error": "GET 요청은 허용되지 않습니다."}, status=405)
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        # POST 요청: 사용자가 이미지를 업로드하거나 변경한 경우
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()  # 변경된 프로필 저장
+            return redirect('profile')  # 저장 후 다시 프로필 페이지로 이동
+    else:
+        # GET 요청: 기존 프로필 정보를 가져옴
+        form = ProfileUpdateForm(instance=request.user.profile)
+    return render(request, 'Server/profile.html', {'form': form})  # 폼을 템플릿에 전달
+
+@login_required
+def profile_view(request):
+    # 프로필 보기
+    return render(request, 'Server/profile.html')
+
+@login_required
+def profile_update(request):
+    # 프로필 수정
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('/server/original/')
+    else:
+        form = ProfileUpdateForm(instance=request.user.profile)
+
+    return render(request, 'Server/profile_update.html', {'form': form})
