@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
+from django.contrib.auth.models import User
+
 # User 모델
 class User(models.Model):
     user_id = models.CharField(max_length=50, unique=True)
@@ -83,11 +85,31 @@ class GPT(models.Model):
 
     def __str__(self):
         return f"GPT History {self.history_id} for {self.user.username}"
+    
+
+class FileHistory(models.Model):
+    user = models.ForeignKey(
+        'auth.User',
+        on_delete=models.CASCADE,
+        related_name='file_histories'
+    )
+    original_content = models.TextField()
+    modified_content = models.TextField()
+    title = models.CharField(max_length=200)
+    upload_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-upload_date']
+        db_table = 'server_filehistory'  # 테이블 이름 명시적 지정
+
+    def __str__(self):
+        return f"{self.title} - {self.upload_date}"
 
 class UploadedFile(models.Model):
-    title = models.CharField(max_length=255)  # 파일 제목
-    content = models.TextField()  # 파일 내용
-    anonymized_content = models.TextField(null=True, blank=True)  # 가명화된 텍스트
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    anonymized_content = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

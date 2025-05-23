@@ -9,6 +9,7 @@
     <style>
         /* 전체 페이지 및 고정 네비게이션 바 설정 */
         body, html {
+            font-family: 'Arial', sans-serif;
             height: 100%;
             margin: 0;
             display: flex;
@@ -119,13 +120,17 @@
             color: #0056b3;
         }
 
-        /* 푸터 고정 */
+        /* Footer */
         footer {
-            background-color: #333;
+            background-color: #343a40;
             color: white;
             text-align: center;
-            padding: 1rem 0;
-            width: 100%;
+            padding: 15px 0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -133,7 +138,7 @@
     <!-- 상단바 -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/server/main/">Forenswu</a>
+            <a class="navbar-brand" href="/server/main/">Anonify</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -211,7 +216,7 @@
 
     <!-- 푸터 고정 -->
     <footer>
-        <p>ⓒ Forenswu</p>
+        <p>&copy; 2024 Forenswu.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

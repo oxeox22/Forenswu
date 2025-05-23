@@ -7,14 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        /* 전체 페이지 레이아웃 */
+        /* 전체 페이지 및 고정 네비게이션 바 설정 */
         body, html {
+            font-family: 'Arial', sans-serif;
+            height: 100%;
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
         /* 네비게이션 바 */
@@ -126,14 +125,17 @@
             margin-bottom: 5px;
         }
 
-        /* 푸터 */
+        /* Footer */
         footer {
-            background-color: #333;
-            color: #fff;
+            background-color: #343a40;
+            color: white;
             text-align: center;
-            padding: 10px 0;
-            position: relative;
-            bottom: 0;
+            padding: 15px 0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -141,7 +143,7 @@
     <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/server/main/">Forenswu</a>
+            <a class="navbar-brand" href="/server/main/">Anonify</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -214,7 +216,7 @@
 
     <!-- 푸터 -->
     <footer>
-        ⓒ Forenswu
+        ⓒ 2024 Forenswu.
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

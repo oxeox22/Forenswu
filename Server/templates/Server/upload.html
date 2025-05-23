@@ -8,14 +8,89 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <style>
         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 네비게이션 바 스타일 */
+        .navbar {
+            background: linear-gradient(135deg, #007bff, #6c63ff); /* 상단바 배경 그라데이션 */
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 하단 그림자 */
+            padding: 0; /* 패딩 초기화 */
+            height: 60px; /* 고정된 상단바 높이 */
+            display: flex;
+            align-items: center; /* 수직 중앙 정렬 */
+        }
+
+        .navbar .container-fluid {
+            display: flex;
+            justify-content: space-between; /* 양 끝 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            padding: 0 20px; /* 양쪽 여백 */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem; /* 브랜드 이름 크기 */
+            letter-spacing: 1px;
+            margin: 0; /* 여백 제거 */
+            padding: 0; /* 패딩 제거 */
+            color: white;
+            text-decoration: none; /* 링크 스타일 제거 */
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0; /* 여백 제거 */
+            padding: 0; /* 패딩 제거 */
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 15px; /* 각 링크 사이 간격 */
+        }
+
+        .navbar-nav .nav-link {
+            color: white;
+            font-weight: 500;
+            font-size: 1rem; /* 링크 텍스트 크기 */
+            text-decoration: none; /* 링크 밑줄 제거 */
+            padding: 8px 10px; /* 링크 내부 여백 */
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffd700; /* 링크 호버 시 색상 */
+        }
+
+        .nav-login {
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px; /* 둥근 버튼 */
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-login:hover {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        /* 컨테이너 래퍼 */
+        .container-wrapper {
+            flex: 1 0 auto;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            background-color: #f4f9fc;
         }
 
         .container-fluid {
-            flex-grow: 1;
+            flex: 1;
+            padding: 20px;
         }
 
         .posting {
@@ -80,166 +155,154 @@
             background-color: #5a55d6;
         }
 
+        /* 푸터 */
         footer {
-            background-color: #2c3e50;
+            background-color: #343a40;
             color: white;
             text-align: center;
             padding: 15px 0;
-            margin-top: 20px; /* 콘텐츠와 간격 추가 */
-            width: 100%; /* 전체 화면 폭 */
-            flex-shrink: 0; /* Flexbox를 사용하는 경우 Footer를 줄어들지 않게 설정 */
+            margin-top: auto;
+            width: 100%;
         }
 
-
-        nav.navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: linear-gradient(135deg, #007bff, #6c63ff);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        nav .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        nav .navbar-nav {
-            margin-left: auto;
-        }
-
-        nav .navbar-nav .nav-link {
-            color: white !important;
-            font-weight: 500;
-            font-size: 1rem;
-            margin-left: 15px;
-            transition: color 0.3s;
-        }
-
-        nav .navbar-nav .nav-link:hover {
-            color: #ffd700 !important;
-            text-decoration: underline;
-        }
-
-        .nav-login {
-            background-color: #ffd700;
-            color: #000;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-login:hover {
-            background-color: #ffc107;
-            color: #000;
-        }
-
-        nav .navbar-nav .btn-login:hover {
-            background-color: #c0392b;
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
         }
     </style>
 </head>
-
 <body>
-<!-- 상단바 -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/server/main/">Forenswu</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/server/search/">검색</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/server/upload/">가명화</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/server/gpt/">GPT</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/server/certificate/">증명서</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/server/original/">마이페이지</a>
-                </li>
-                <!-- 로그인 상태에 따라 Login/Logout 표시 -->
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <form action="{% url 'server_logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-link nav-login btn btn-link">Logout</button>
-                    </form>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link nav-login" href="/server/login/">Login</a>
-                </li>
-                {% endif %}
-            </ul>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/server/main/">Anonify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/search/">검색</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/upload/">가명화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/gpt/">GPT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/certificate/">증명서</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/server/original/">마이페이지</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <form action="{% url 'server_logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link nav-login btn btn-link">Logout</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-login" href="/server/login/">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 컨테이너 래퍼 -->
+    <div class="container-wrapper">
+        <!-- 업로드 폼 -->
+        <div class="container-fluid">
+            <div class="posting">
+                <h1>파일 업로드 및 가명화</h1>
+                <form id="fileUploadForm">
+                    <div class="form-group">
+                        <label for="file">파일을 업로드하세요:</label>
+                        <input type="file" id="file" accept=".txt,.pdf,.jpg,.jpeg,.png" class="form-control">
+                        <small class="form-text text-muted">PDF, 이미지(JPG, PNG) 또는 TXT 파일만 업로드 가능합니다.</small>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label for="fileContent">파일 내용:</label>
+                        <textarea id="fileContent" readonly></textarea>
+                    </div>
+
+                    <h5 class="mt-4">가명화할 정보 선택:</h5>
+                    <div id="checkboxContainer"></div>
+
+                    <button class="btn btn-primary mt-3" id="nextButton" type="button">다음</button>
+                </form>
+            </div>
         </div>
     </div>
-</nav>
 
-
-    <!-- 업로드 폼 -->
-    <div class="container-fluid">
-        <div class="posting">
-            <h1>파일 업로드 및 가명화</h1>
-            <form id="fileUploadForm">
-                <div class="form-group">
-                    <label for="file">파일을 업로드하세요:</label>
-                    <input type="file" id="file" accept=".txt" class="form-control">
-                </div>
-
-                <div class="form-group mt-4">
-                    <label for="fileContent">파일 내용:</label>
-                    <textarea id="fileContent" readonly></textarea>
-                </div>
-
-                <h5 class="mt-4">가명화할 정보 선택:</h5>
-                <div id="checkboxContainer"></div>
-
-                <button class="btn btn-primary mt-3" id="nextButton" type="button">다음</button>
-            </form>
-        </div>
-    </div>
-
+    <!-- 푸터 -->
     <footer>
-        <div class="container">
-            <p>&copy; 2024 Forenswu.</p>
-        </div>
+        <p>&copy; 2024 Forenswu.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <!-- 기존 스크립트 유지 -->
     <script>
         const patterns = {
-            주민등록번호: /\d{6}[-]?[1-4]\d{6}/g,
-            운전면허번호: /\d{2}-\d{2}-\d{6}-\d{2}/g,
-            외국인등록번호: /\d{6}[-]?[5-8]\d{6}/g,
-            여권번호: /[a-zA-Z]{1}[0-9]{8}/g,
-            전화번호: /010[-\s]?\d{3,4}[-\s]?\d{4}/g,
-            신용카드번호: /[34569]\d{3}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}/g,
-            계좌번호: /^\d{11,14}$/g,
-            이메일주소: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
-            생년월일: /(19[0-9]{2}|20[0-9]{2})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])/g
+
+        주민등록번호: /\d{6}[-]?[1-4]\d{6}/g,
+        운전면허번호: /\d{2}-\d{2}-\d{6}-\d{2}/g,
+        외국인등록번호: /\d{6}[-]?[5-8]\d{6}/g,
+        여권번호: /M\d{8}/g,
+        전화번호: /010[-\s]?\d{3,4}[-\s]?\d{4}/g,
+        신용카드번호: /[34569]\d{3}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}/g,
+        계좌번호: /\b\d{4}-\d{4}-\d{4}\b/g,
+        이메일주소: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
+        생년월일: /\b(19[0-9]{2}|20[01][0-9]|202[0-5])(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])\b|\b\d{6}\b/g,
+        이름: /\b(김|이|박|최|정|강|조|윤|장|임)[가-힣]{2}([은는이가을를도]?)?\b/g
+
         };
 
         document.getElementById('file').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const content = e.target.result;
-                    document.getElementById('fileContent').value = content;
-                    createCheckboxes(content);
-                };
-                reader.readAsText(file);
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                
+                if (fileExtension === 'pdf' || fileExtension === 'txt' || 
+                    fileExtension === 'jpg' || fileExtension === 'jpeg' || 
+                    fileExtension === 'png') {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    
+                    // 로딩 메시지 표시
+                    document.getElementById('fileContent').value = "파일 처리 중...";
+                    
+                    fetch('/server/upload_file/', {  // URL 경로 확인
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            document.getElementById('fileContent').value = "";
+                        } else {
+                            document.getElementById('fileContent').value = data.extracted_text;
+                            window.originalFileName = file.name;
+                            if (data.extracted_text) {
+                                createCheckboxes(data.extracted_text);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('파일 업로드 중 오류가 발생했습니다.');
+                        document.getElementById('fileContent').value = "";
+                    });
+                } else {
+                    alert('지원하지 않는 파일 형식입니다. PDF, 이미지(JPG, PNG) 또는 TXT 파일만 업로드 가능합니다.');
+                    event.target.value = '';
+                }
             }
         });
 
@@ -281,8 +344,9 @@
 
             const fileContent = encodeURIComponent(document.getElementById('fileContent').value);
             const anonymizedContentEncoded = encodeURIComponent(anonymizedContent);
+            const fileName = encodeURIComponent(window.originalFileName || '무제');
 
-            window.location.href = `/server/pseudonymize/?fileContent=${fileContent}&anonymizedContent=${anonymizedContentEncoded}`;
+            window.location.href = `/server/pseudonymize/?fileContent=${fileContent}&anonymizedContent=${anonymizedContentEncoded}&fileName=${fileName}`;
         });
     </script>
 </body>

@@ -9,52 +9,73 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: row;
-            height: 100vh;
-            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* 스크롤바 숨기기 */
         }
 
-        /* 네비게이션 바 고정 */
+        /* 네비게이션 바 스타일 */
         .navbar {
-            background: linear-gradient(135deg, #007bff, #6c63ff);
-            position: fixed; /* 네비게이션 바를 화면 상단에 고정 */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
-            padding: 0.5rem 1rem; /* 적절한 패딩 추가 */
+            background: linear-gradient(135deg, #007bff, #6c63ff); /* 상단바 배경 그라데이션 */
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 하단 그림자 */
+            padding: 0; /* 패딩 초기화 */
+            height: 60px; /* 고정된 상단바 높이 */
+            display: flex;
+            align-items: center; /* 수직 중앙 정렬 */
+        }
+
+        .navbar .container-fluid {
+            display: flex;
+            justify-content: space-between; /* 양 끝 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            padding: 0 20px; /* 양쪽 여백 */
         }
 
         .navbar-brand {
             font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* 브랜드 이름 크기 */
             letter-spacing: 1px;
+            margin: 0; /* 여백 제거 */
+            padding: 0; /* 패딩 제거 */
+            color: white;
+            text-decoration: none; /* 링크 스타일 제거 */
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0; /* 여백 제거 */
+            padding: 0; /* 패딩 제거 */
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 15px; /* 각 링크 사이 간격 */
         }
 
         .navbar-nav .nav-link {
-            color: white !important;
+            color: white;
             font-weight: 500;
-            font-size: 1rem;
-            margin-right: 15px;
+            font-size: 1rem; /* 링크 텍스트 크기 */
+            text-decoration: none; /* 링크 밑줄 제거 */
+            padding: 8px 10px; /* 링크 내부 여백 */
             transition: color 0.3s;
         }
 
         .navbar-nav .nav-link:hover {
-            color: #ffd700 !important; /* 금색 */
-            text-decoration: underline;
+            color: #ffd700; /* 링크 호버 시 색상 */
         }
 
-        /* Login 버튼 강조 */
         .nav-login {
             background-color: #ffd700;
             color: #000;
             font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 8px 15px;
+            border-radius: 20px; /* 둥근 버튼 */
             transition: background-color 0.3s ease;
+            text-decoration: none;
         }
 
         .nav-login:hover {
@@ -62,24 +83,20 @@
             color: #000;
         }
 
+
+        /* 사이드바 */
         .side-bar {
             width: 250px;
             background-color: #343a40;
             color: white;
             padding: 20px;
-            margin-top: 56px;
-            overflow-y: auto;
+            overflow-y: auto; /* 파일 목록에만 스크롤바 추가 */
             flex-shrink: 0;
-        }
-
-        .side-bar h4 {
-            margin-bottom: 20px;
-        }
-
-        .file-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            height: calc(100vh - 60px); /* 네비게이션 바 높이를 제외한 전체 높이 */
+            position: fixed;
+            left: 0;
+            top: 60px; /* 네비게이션 바 바로 아래에 위치 */
+            z-index: 999; /* 네비게이션 바 아래에 배치 */
         }
 
         .file-item {
@@ -89,70 +106,113 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 10px;
         }
 
         .file-item:hover {
             background-color: #6c757d;
         }
 
-        .main-content {
-            flex-grow: 1;
+        /* 메인 컨텐츠 */
+        .container-wrapper {
+            flex: 1 0 auto;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
-            margin-top: 56px;
-            overflow-y: auto;
+            margin-top: 5px;
         }
 
-        .chat-box {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background-color: #ffffff;
-            border-radius: 8px;
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            min-height: calc(100vh - 56px - 50px);
         }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            height: 600px; /* 채팅 박스의 고정 높이 */
+            padding-bottom: 70px; /* 입력창 높이를 고려한 여백 추가 */
+            overflow: hidden; /* 채팅 영역의 넘치는 부분 숨김 */
+        }
+
 
         .chat-bubble {
             max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            margin-bottom: 10px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            margin-bottom: 15px; /* 말풍선 간 간격 */
             line-height: 1.5;
             display: inline-block;
+            position: relative;
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
         }
 
         .chat-bubble.question {
-            background-color: #d4edda;
-            align-self: flex-end;
+            background-color: #007bff; /* 사용자 질문 색상 */
+            color: white;
+            align-self: flex-end; /* 오른쪽 정렬 */
             border-top-right-radius: 0;
+            margin-left: auto; /* 왼쪽 여백 */
         }
 
         .chat-bubble.answer {
-            background-color: #e9ecef;
-            align-self: flex-start;
+            background-color: #e9ecef; /* GPT 답변 색상 */
+            color: black;
+            align-self: flex-start; /* 왼쪽 정렬 */
             border-top-left-radius: 0;
+            margin-right: auto; /* 오른쪽 여백 */
         }
 
-        .chat-input {
+        /* 말풍선 간의 여백 추가 */
+        #chatBox {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* 말풍선 사이의 간격 */
+            padding: 10px 15px;
+            overflow-y: auto;
+        }
+
+        .input-container {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            position: absolute; /* 채팅 박스 내부의 하단에 고정 */
+            bottom: 0; /* 부모 컨테이너의 하단에 위치 */
+            left: 0;
+            width: 100%; /* 입력창이 채팅 박스 너비와 일치 */
+            height: 70px;
+            box-sizing: border-box; /* 패딩 포함한 높이 계산 */
         }
 
-        .chat-input input {
-            flex-grow: 1;
+        .input-container input {
+            flex: 1;
+            padding: 12px 15px;
             border-radius: 20px;
             border: 1px solid #ced4da;
-            padding: 10px 15px;
+            font-size: 1rem;
         }
 
-        .chat-input button {
+        .input-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
             padding: 10px 20px;
             border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .input-container button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -162,7 +222,7 @@
     <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/server/main/">Forenswu</a>
+            <a class="navbar-brand" href="/server/main/">Anonify</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -201,25 +261,62 @@
         </div>
     </nav>
 
-    <!-- 사이드바 -->
-    <div class="side-bar">
-        <h4>File list</h4>
-        <div class="file-list" id="fileList"></div>
-    </div>
+    <!-- 컨테이너 래퍼 -->
+    <div class="container-wrapper">
+        <!-- 사이드바 -->
+        <div class="side-bar">
+            <h3>파일 목록</h3>
+            <div id="fileList">
+                <!-- 파일 목록이 여기에 동적으로 로드됨 -->
+            </div>
+        </div>
 
-    <!-- 메인 콘텐츠 -->
-    <div class="main-content">
-        <div class="chat-box" id="chatBox"></div>
-
-        <div class="chat-input">
-            <input type="text" id="questionInput" placeholder="질문을 입력하세요">
-            <button id="askButton" class="btn btn-primary">질문하기</button>
+        <!-- 메인 컨텐츠 -->
+        <div class="main-content">
+            <div class="chat-container">
+                <div id="chatBox">
+                    <!-- 채팅 내용이 여기에 표시됨 -->
+                </div>
+                <div class="input-container">
+                    <input type="text" id="questionInput" class="form-control" placeholder="질문을 입력하세요">
+                    <button id="askButton" class="btn btn-primary">전송</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2024 Forenswu.</p>
+    </footer>
+
     <script>
         let selectedFileId = null;
+        let fileContents = {};  // 파일 내용을 저장할 객체
 
+        // 채팅 기록을 저장하고 불러오는 함수들
+        function saveChatHistory(fileId, chatHistory) {
+            localStorage.setItem(`chat_history_${fileId}`, JSON.stringify(chatHistory));
+        }
+
+        function loadChatHistory(fileId) {
+            const savedHistory = localStorage.getItem(`chat_history_${fileId}`);
+            return savedHistory ? JSON.parse(savedHistory) : [];
+        }
+
+        function displayChatHistory(history) {
+            const chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML = '';
+            history.forEach(message => {
+                const bubble = document.createElement("div");
+                bubble.classList.add("chat-bubble", message.type);
+                bubble.textContent = message.content;
+                chatBox.appendChild(bubble);
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // 파일 목록을 불러오는 함수
         async function loadFileList() {
             const fileListContainer = document.getElementById("fileList");
 
@@ -227,24 +324,45 @@
                 const response = await fetch("/server/get_uploaded_files/");
                 const files = await response.json();
 
-                fileListContainer.innerHTML = "";
-                files.forEach(file => {
-                    const fileItem = document.createElement("div");
-                    fileItem.classList.add("file-item");
-                    fileItem.textContent = `${file.title}`;
-                    fileItem.onclick = () => startChatWithFile(file.id);
-                    fileListContainer.appendChild(fileItem);
-                });
+                if (response.ok) {
+                    fileListContainer.innerHTML = "";
+                    if (files.length > 0) {
+                        files.forEach(file => {
+                            fileContents[file.id] = file.anonymized_content;
+                            
+                            const fileItem = document.createElement("div");
+                            fileItem.classList.add("file-item");
+                            fileItem.textContent = `${file.title}`;
+                            fileItem.onclick = () => startChatWithFile(file.id, file.title);
+                            fileListContainer.appendChild(fileItem);
+                        });
+                    } else {
+                        fileListContainer.innerHTML = "<div>파일 목록이 없습니다. 파일을 업로드하려면 로그인이 필요합니다.</div>";
+                    }
+                } else {
+                    throw new Error(files.error || "파일을 불러오는데 실패했습니다.");
+                }
             } catch (error) {
                 console.error("Error loading file list:", error);
-                fileListContainer.innerHTML = "<div>파일 목록을 불러올 수 없습니다.</div>";
+                fileListContainer.innerHTML = "<div>파일 목록을 불러올려면 로그인이 필요합니다.</div>";
             }
         }
 
-        function startChatWithFile(fileId) {
+        function startChatWithFile(fileId, fileName) {
             selectedFileId = fileId;
-            const chatBox = document.getElementById("chatBox");
-            chatBox.innerHTML = `<div class="chat-bubble answer">파일 ID ${fileId}를 선택했습니다. 질문을 입력하세요.</div>`;
+            const chatHistory = loadChatHistory(fileId);
+            
+            if (chatHistory.length === 0) {
+                // 새로운 대화 시작
+                const initialMessage = {
+                    type: "answer",
+                    content: `"${fileName}" 파일이 선택되었습니다. 질문을 입력하세요.`
+                };
+                chatHistory.push(initialMessage);
+                saveChatHistory(fileId, chatHistory);
+            }
+            
+            displayChatHistory(chatHistory);
         }
 
         async function askGPT() {
@@ -262,38 +380,65 @@
                 return;
             }
 
-            const questionBubble = document.createElement("div");
-            questionBubble.classList.add("chat-bubble", "question");
-            questionBubble.textContent = question;
-            chatBox.appendChild(questionBubble);
+            // 현재 채팅 기록 불러오기
+            let chatHistory = loadChatHistory(selectedFileId);
+
+            // 질문 추가
+            const questionMessage = {
+                type: "question",
+                content: question
+            };
+            chatHistory.push(questionMessage);
+            displayChatHistory(chatHistory);
 
             try {
                 const response = await fetch("/server/ask_gpt/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ question, file_id: selectedFileId }),
+                    body: JSON.stringify({ 
+                        question, 
+                        file_id: selectedFileId,
+                        file_content: fileContents[selectedFileId]
+                    }),
                 });
                 const data = await response.json();
 
-                const answerBubble = document.createElement("div");
-                answerBubble.classList.add("chat-bubble", "answer");
-                answerBubble.textContent = data.answer || "GPT 응답이 올바르지 않습니다.";
-                chatBox.appendChild(answerBubble);
+                // 답변 추가
+                const answerMessage = {
+                    type: "answer",
+                    content: data.answer || "GPT 응답이 올바르지 않습니다."
+                };
+                chatHistory.push(answerMessage);
+                
+                // 채팅 기록 저장 및 표시
+                saveChatHistory(selectedFileId, chatHistory);
+                displayChatHistory(chatHistory);
 
-                chatBox.scrollTop = chatBox.scrollHeight;
             } catch (error) {
-                const errorBubble = document.createElement("div");
-                errorBubble.classList.add("chat-bubble", "answer");
-                errorBubble.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
-                chatBox.appendChild(errorBubble);
+                const errorMessage = {
+                    type: "answer",
+                    content: "오류가 발생했습니다. 다시 시도해주세요."
+                };
+                chatHistory.push(errorMessage);
+                saveChatHistory(selectedFileId, chatHistory);
+                displayChatHistory(chatHistory);
                 console.error(error);
             }
 
             questionInput.value = "";
         }
 
+        // Enter 키로 질문 전송
+        document.getElementById("questionInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                askGPT();
+            }
+        });
+
         document.getElementById("askButton").addEventListener("click", askGPT);
 
+        // 페이지 로드 시 파일 목록 불러오기
         loadFileList();
     </script>
 </body>

@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -140,3 +140,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Clova OCR 설정
+CLOVA_OCR_API_URL = 'https://a8u2cozawr.apigw.ntruss.com/custom/v1/37972/e1c3bdd839838d093cbe8ff5a4f7e82445d3beaa214074073a2b1d5c490b4d8b/general'
+CLOVA_OCR_SECRET_KEY = 'REVSTklTTWhqdWZaTFBPT3JLZ29zTXFMQ0tadUxzWHU='

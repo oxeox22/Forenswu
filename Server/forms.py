@@ -1,12 +1,12 @@
 # Server/forms.py
 from django import forms
-from .models import OriginalData
+from django.contrib.auth.models import User
 from .models import Profile  # Profile 모델 import
 
-class OriginalDataForm(forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
     class Meta:
-        model = OriginalData
-        fields = ['user_id', 'upload_file', 'original_text', 'processed_data', 'p_status', 'data_type']  # 필요한 필드만 나열
+        model = User
+        fields = ['username', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:

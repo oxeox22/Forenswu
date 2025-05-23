@@ -19,4 +19,8 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),  # 회원가입 페이지
     path('profile/', views.profile, name='profile'),
     path('profile/update/', views.profile_update, name='profile_update'),
+    path('save_modified_file/', views.save_modified_file, name='save_modified_file'),
+    path('file_detail/<int:history_id>/', views.view_file_detail, name='view_file_detail'),
+    path('pwd/', views.change_password, name='change_password'),
+    path('upload_file/', views.upload_file, name='upload_file'),
 ]

@@ -1,3 +1,29 @@
 
 # .gitignore
 .env
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Python (필요하면)
+__pycache__/
+*.pyc
+
+# 기타 빌드 아티팩트
+/dist/
+/build/
+
+# SQLite DB
+*.sqlite3
+
+# 사용자 업로드 파일
+media/
+
+# Django migrations bytecode
+**/migrations/__pycache__/
+
+# 가끔 생기는 IDE 파일
+.idea/
+*.iml
+
